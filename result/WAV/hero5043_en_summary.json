@@ -1,0 +1,12 @@
+{
+  "wav_files": 3473,
+  "failed": 0,
+  "banks_loaded": 75,
+  "decode_mode": "one_shot",
+  "decoder": "D:\\WorkSpace\\1999-reserve\\1999decrypt\\音频解码\\Tools\\vgmstream\\test.exe",
+  "decoder_args": "-i -o",
+  "looping_ignored": true,
+  "source_mapping": "D:\\WorkSpace\\1999-reserve\\Wwise-Unpacker\\WAV_bp\\mapping_device_tw\\mapping.jsonl",
+  "backup_unchanged": true,
+  "output": "D:\\WorkSpace\\1999-reserve\\Wwise-Unpacker\\WAV"
+}
