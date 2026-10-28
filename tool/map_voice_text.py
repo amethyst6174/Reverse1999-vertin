@@ -48,7 +48,10 @@ def main() -> None:
     parser.add_argument("audio_index", type=Path)
     parser.add_argument("story_dir", type=Path)
     parser.add_argument("output", type=Path)
-    parser.add_argument("--list-prefix", default="/data/admin4/dataset/hero5043/WAV/")
+    parser.add_argument(
+        "--list-prefix",
+        help="WAV path prefix in gpt-sovits.list; defaults to the actual audio_index directory",
+    )
     parser.add_argument("--default-speaker", default="Vertin")
     args = parser.parse_args()
     args.output.mkdir(parents=True, exist_ok=True)
@@ -111,15 +114,18 @@ def main() -> None:
             writer.writeheader()
             writer.writerows(selected)
 
+    list_prefix = (args.list_prefix.rstrip("/\\") + "/" if args.list_prefix
+                   else args.audio_index.resolve().parent.as_posix().rstrip("/") + "/")
     list_lines = []
     for row in rows:
         if row["status"] != "matched_unique_english":
             continue
         speaker = row["speaker"] or args.default_speaker
-        list_lines.append(f"{args.list_prefix}{row['wav']}|{speaker}|en|{row['english']}")
+        list_lines.append(f"{list_prefix}{row['wav']}|{speaker}|en|{row['english']}")
     (args.output / "gpt-sovits.list").write_text("\n".join(list_lines) + ("\n" if list_lines else ""), encoding="utf-8")
     summary = {"wav_files": len(rows), "status_counts": dict(collections.Counter(row["status"] for row in rows)),
-               "gpt_sovits_lines": len(list_lines), "github_text_used": False}
+               "gpt_sovits_lines": len(list_lines), "list_prefix": list_prefix,
+               "github_text_used": False}
     (args.output / "summary.json").write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8")
     print(json.dumps(summary, ensure_ascii=False, indent=2))
 

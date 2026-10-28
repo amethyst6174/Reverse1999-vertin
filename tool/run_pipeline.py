@@ -22,7 +22,10 @@ def main() -> None:
     parser.add_argument("--apk", type=Path)
     parser.add_argument("--vgmstream", type=Path, required=True)
     parser.add_argument("--skip-collect", action="store_true")
-    parser.add_argument("--list-prefix", default="/data/admin4/dataset/hero5043/WAV/")
+    parser.add_argument(
+        "--list-prefix",
+        help="Optional deployment WAV prefix; defaults to the actual result/WAV directory",
+    )
     args = parser.parse_args()
 
     scripts = Path(__file__).resolve().parent
@@ -46,8 +49,10 @@ def main() -> None:
     run(scripts / "extract_story.py", source, story)
     run(scripts / "extract_audio.py", source, config / "tables", wav,
         "--vgmstream", args.vgmstream, "--hero", args.hero)
-    run(scripts / "map_voice_text.py", wav / "audio_index.jsonl", story, mapping,
-        "--list-prefix", args.list_prefix)
+    map_arguments = [wav / "audio_index.jsonl", story, mapping]
+    if args.list_prefix:
+        map_arguments.extend(["--list-prefix", args.list_prefix])
+    run(scripts / "map_voice_text.py", *map_arguments)
     print(f"Finished. Results: {result}")
 
 

@@ -1,4 +1,4 @@
-# Reverse: 1999语音资源提取与维尔汀部分音频保存
+## Reverse: 1999语音资源提取与维尔汀部分音频保存
 
 本项目用于从《重返未来：1999》的国际服APK和Android模拟器资源中提取角色语音，解码为不循环的WAV，并关联当前客户端中的英文剧情文本。目前已提取角色维尔汀的剧情语音，包含1-13章主线，以及部分支线活动。未登录时且未使用游戏内素材解锁历史支线存档时，apk以及Android目录中并不包含这些资源，对应内容都不包含在result目录中。
 
@@ -66,8 +66,8 @@ python tool/run_pipeline.py `
 result/mapping/gpt-sovits.list
 ```
 
-清单格式：
+默认使用`result/WAV`的绝对路径：
 
 ```text
-/data/admin4/dataset/hero5043/WAV/xxx.wav|Vertin|en|English text
+/result/WAV/xxx.wav|Vertin|en|English text
 ```
