@@ -1,11 +1,10 @@
-# Keep only the reusable toolkit and generated-result directory in this repository.
 /*
 !/.gitignore
+!/README.md
 !/tool/
 !/tool/**
 !/result/
 !/result/**
 
-# Ignore local Python caches inside the retained toolkit.
 /tool/__pycache__/
 /tool/**/*.pyc
